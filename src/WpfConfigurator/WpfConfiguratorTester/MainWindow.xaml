@@ -1,0 +1,9 @@
+﻿<Window x:Class="WpfConfiguratorTester.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:wpfConfiguratorLib="clr-namespace:WpfConfiguratorLib;assembly=WpfConfiguratorLib"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <wpfConfiguratorLib:WpfConfigurator Name="WpfConfigurator" SaveRequested="WpfConfigurator_OnSaveRequested" />
+    </Grid>
+</Window>
