@@ -81,7 +81,7 @@ namespace WpfConfiguratorLib.entities
 
                     // Add to list
                     properties.Add(ConfigPropertyInfo.FromConfigPropertyAttribute(configPropertyAttribute,
-                        propertyInfo.Name, GetValue(propertyInfo.Name), propertyInfo.GetType(), ValueChangedDelegate));
+                        propertyInfo.Name, GetValue(propertyInfo.Name), propertyInfo.PropertyType, ValueChangedDelegate));
                 }
 
                 // Return list of properties

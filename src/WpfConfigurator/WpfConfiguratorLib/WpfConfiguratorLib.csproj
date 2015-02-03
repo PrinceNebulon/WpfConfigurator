@@ -57,6 +57,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="editors\BooleanEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="editors\ComboboxEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="editors\StringEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -76,6 +84,13 @@
     <Compile Include="ConfigurationGroup.xaml.cs">
       <DependentUpon>ConfigurationGroup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="editors\BooleanEditor.xaml.cs">
+      <DependentUpon>BooleanEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="editors\ComboboxEditor.xaml.cs">
+      <DependentUpon>ComboboxEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="editors\PropertyEditorDataTemplateSelector.cs" />
     <Compile Include="editors\StringEditor.xaml.cs">
       <DependentUpon>StringEditor.xaml</DependentUpon>
     </Compile>

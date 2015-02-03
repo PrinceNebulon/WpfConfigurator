@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="WpfConfiguratorLib.editors.BooleanEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="80" d:DesignWidth="300" d:DataContext="{d:DesignData ConfigPropertyInfo}">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../resources/Colors.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <DockPanel LastChildFill="False">
+        <Label DockPanel.Dock="Left" VerticalAlignment="Center" Content="{Binding Path=DisplayName}">
+            <Label.ToolTip>
+                <Grid MaxWidth="250">
+                    <TextBlock Text="{Binding Path=Description}" TextWrapping="Wrap" />
+                </Grid>
+            </Label.ToolTip>
+        </Label>
+        <CheckBox VerticalAlignment="Center" DockPanel.Dock="Right" IsChecked="{Binding Path=Value, UpdateSourceTrigger=PropertyChanged}" />
+    </DockPanel>
+</UserControl>

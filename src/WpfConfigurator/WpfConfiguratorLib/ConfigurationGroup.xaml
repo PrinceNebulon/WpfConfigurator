@@ -13,6 +13,8 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="resources/Colors.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            
+            <editors:PropertyEditorDataTemplateSelector x:Key="PropertyEditorDataTemplateSelector" />
         </ResourceDictionary>
     </UserControl.Resources>
     
@@ -30,14 +32,20 @@
                 <Label DockPanel.Dock="Top" Content="{Binding Path=MergedDescription}" FontSize="12" Foreground="Gray" />
             </StackPanel>
 
-            <ItemsControl ItemsSource="{Binding Path=Properties}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
+            <ItemsControl ItemsSource="{Binding Path=Properties}" ItemTemplateSelector="{StaticResource PropertyEditorDataTemplateSelector}">
+                <ItemsControl.Resources>
+                    <DataTemplate x:Key="StringEditor">
                         <editors:StringEditor />
                     </DataTemplate>
-                </ItemsControl.ItemTemplate>
+                    <DataTemplate x:Key="BooleanEditor">
+                        <editors:BooleanEditor />
+                    </DataTemplate>
+                    <DataTemplate x:Key="ComboboxEditor">
+                        <editors:ComboboxEditor />
+                    </DataTemplate>
+                </ItemsControl.Resources>
             </ItemsControl>
-            
+
             <ItemsControl ItemsSource="{Binding Path=Children}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>

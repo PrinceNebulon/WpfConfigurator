@@ -1,4 +1,5 @@
-﻿using System.Windows.Media;
+﻿using System.ComponentModel;
+using System.Windows.Media;
 using WpfConfiguratorLib.attributes;
 using WpfConfiguratorLib.entities;
 
@@ -27,8 +28,14 @@ namespace WpfConfiguratorTester
         [ConfigProperty("First Name", Description = "Your first name")]
         public string FirstName { get; set; }
 
-        [ConfigProperty("Last Name",Description = "Your last name")]
+        [ConfigProperty("Last Name", Description = "Your last name")]
         public string LastName { get; set; }
+
+        [ConfigProperty("Account active", Description = "If the account is currently active or not")]
+        public bool IsAccountActive { get; set; }
+
+        [ConfigProperty("Account Type", Description = "The type of the account")]
+        public AccountType AccountType { get; set; }
 
         [ConfigGroupPropertyAttribute("Billing Address", Description = "The address to which your bill will be sent", Color = "#1997CA")]
         public AddressData Address { get; set; }
@@ -49,6 +56,9 @@ namespace WpfConfiguratorTester
             get { return "A mailing address"; }
         }
 
+        [ConfigProperty("House Color", Description = "The color of the house")]
+        public HouseColors HouseColor { get; set; }
+
         [ConfigProperty("Street Number", DefaultValue = "", Description = "The number of the building")]
         public string StreetNumber { get; set; }
 
@@ -63,5 +73,27 @@ namespace WpfConfiguratorTester
 
         [ConfigProperty("Zip Code", DefaultValue = "")]
         public string ZipCode { get; set; }
+    }
+
+    public enum HouseColors
+    {
+        [Description("None")]
+        NoPaint,
+        [Description("Bright Red")]
+        Red,
+        [Description("Cerulean Blue")]
+        Blue,
+        [Description("Grass Green")]
+        Green,
+        [Description("Daisy Yellow")]
+        Yellow
+    }
+
+    public enum AccountType
+    {
+        [Description("Standard")]
+        Normal,
+        Premier,
+        Executive
     }
 }
