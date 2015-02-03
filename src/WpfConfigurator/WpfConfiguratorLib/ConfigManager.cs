@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using Newtonsoft.Json;
 using WpfConfiguratorLib.entities;
 
@@ -31,7 +32,7 @@ namespace WpfConfiguratorLib
         static ConfigManager()
         {
             // Set working directory
-            WorkingDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "configdata");
+            WorkingDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),Application.Current.MainWindow.GetType().Assembly.GetName().Name, "configdata");
             if (!Directory.Exists(WorkingDirectory)) Directory.CreateDirectory(WorkingDirectory);
             Console.WriteLine("WorkingDirectory=" + WorkingDirectory);
         }
