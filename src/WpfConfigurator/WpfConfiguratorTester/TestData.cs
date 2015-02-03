@@ -1,6 +1,4 @@
-﻿using System.Configuration;
-using System.Security.Cryptography;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 using WpfConfiguratorLib.attributes;
 using WpfConfiguratorLib.entities;
 

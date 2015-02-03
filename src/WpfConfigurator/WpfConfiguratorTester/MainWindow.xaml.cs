@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Configuration;
 using System.Windows;
 using WpfConfiguratorLib;
 using WpfConfiguratorLib.entities;
@@ -11,8 +10,6 @@ namespace WpfConfiguratorTester
     /// </summary>
     public partial class MainWindow : Window
     {
-        //private Configuration _config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoaming);
-
         public MainWindow()
         {
             InitializeComponent();
