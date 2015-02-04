@@ -90,11 +90,14 @@
     <Compile Include="editors\ComboboxEditor.xaml.cs">
       <DependentUpon>ComboboxEditor.xaml</DependentUpon>
     </Compile>
-    <Compile Include="editors\PropertyEditorDataTemplateSelector.cs" />
+    <Compile Include="editors\helpers\GridLengthPercentageConverter.cs" />
+    <Compile Include="editors\helpers\GridLengthPercentageInverseConverter.cs" />
+    <Compile Include="editors\helpers\PropertyEditorDataTemplateSelector.cs" />
     <Compile Include="editors\StringEditor.xaml.cs">
       <DependentUpon>StringEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="entities\ConfigGroup.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="WpfConfigurator.xaml.cs">
       <DependentUpon>WpfConfigurator.xaml</DependentUpon>
       <SubType>Code</SubType>

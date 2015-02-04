@@ -4,6 +4,9 @@
         xmlns:wpfConfiguratorLib="clr-namespace:WpfConfiguratorLib;assembly=WpfConfiguratorLib"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <wpfConfiguratorLib:WpfConfigurator Name="WpfConfigurator" SaveRequested="WpfConfigurator_OnSaveRequested" />
+        <wpfConfiguratorLib:WpfConfigurator Name="WpfConfigurator" 
+                                            SaveRequested="WpfConfigurator_OnSaveRequested" 
+                                            LabelWidthPercentage="30" 
+                                            ContentMinWidth="200"/>
     </Grid>
 </Window>

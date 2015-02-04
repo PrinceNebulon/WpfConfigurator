@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using WpfConfiguratorLib.attributes;
 
-namespace WpfConfiguratorLib.editors
+namespace WpfConfiguratorLib.editors.helpers
 {
     public class PropertyEditorDataTemplateSelector : DataTemplateSelector
     {

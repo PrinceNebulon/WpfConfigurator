@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:wpfConfiguratorLib="clr-namespace:WpfConfiguratorLib"
-             mc:Ignorable="d" 
+             mc:Ignorable="d" Name="TheWindow"
              d:DesignHeight="300" d:DesignWidth="300">
     <DockPanel>
         <DockPanel DockPanel.Dock="Bottom" LastChildFill="False">
@@ -12,8 +12,11 @@
             <Button Margin="2" Padding="6,2" DockPanel.Dock="Right" Click="Save_OnClick">Save</Button>
         </DockPanel>
         
-        <ScrollViewer>
-            <wpfConfiguratorLib:ConfigurationGroup />
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <wpfConfiguratorLib:ConfigurationGroup 
+                LabelWidthPercentage="{Binding ElementName=TheWindow, Path=LabelWidthPercentage}" 
+                MinWidth="{Binding ElementName=TheWindow, Path=ContentMinWidth}"
+                MaxWidth="{Binding ElementName=TheWindow, Path=ContentMaxWidth}"/>
         </ScrollViewer>
     </DockPanel>
 </UserControl>

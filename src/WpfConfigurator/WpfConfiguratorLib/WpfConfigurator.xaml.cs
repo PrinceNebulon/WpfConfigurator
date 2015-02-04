@@ -20,6 +20,33 @@ namespace WpfConfiguratorLib
 
         public event SaveRequestedHandler SaveRequested;
 
+        public static DependencyProperty LabelWidthPercentageProperty = DependencyProperty.Register(
+            "LabelWidthPercentage", typeof(double), typeof(WpfConfigurator), new PropertyMetadata((double)20));
+
+        public double LabelWidthPercentage
+        {
+            get { return (double)GetValue(LabelWidthPercentageProperty); }
+            set { SetValue(LabelWidthPercentageProperty, value); }
+        }
+
+        public static readonly DependencyProperty ContentMinWidthProperty = DependencyProperty.Register(
+            "ContentMinWidth", typeof (int), typeof (WpfConfigurator), new PropertyMetadata(100));
+
+        public int ContentMinWidth
+        {
+            get { return (int) GetValue(ContentMinWidthProperty); }
+            set { SetValue(ContentMinWidthProperty, value); }
+        }
+
+        public static readonly DependencyProperty ContentMaxWidthProperty = DependencyProperty.Register(
+            "ContentMaxWidth", typeof (int), typeof (WpfConfigurator), new PropertyMetadata(Int32.MaxValue));
+
+        public int ContentMaxWidth
+        {
+            get { return (int) GetValue(ContentMaxWidthProperty); }
+            set { SetValue(ContentMaxWidthProperty, value); }
+        }
+
         #endregion
 
 
@@ -59,7 +86,7 @@ namespace WpfConfiguratorLib
         {
             try
             {
-
+                Console.WriteLine("Val={0}", LabelWidthPercentage);
             }
             catch (Exception ex)
             {

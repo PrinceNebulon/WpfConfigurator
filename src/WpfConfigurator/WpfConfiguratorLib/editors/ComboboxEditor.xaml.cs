@@ -23,6 +23,16 @@ namespace WpfConfiguratorLib.editors
     /// </summary>
     public partial class ComboboxEditor : UserControl
     {
+        public static DependencyProperty LabelWidthPercentageProperty = DependencyProperty.Register(
+            "LabelWidthPercentage", typeof(double), typeof(ComboboxEditor), new PropertyMetadata((double)20));
+
+        public double LabelWidthPercentage
+        {
+            get { return (double)GetValue(LabelWidthPercentageProperty); }
+            set { SetValue(LabelWidthPercentageProperty, value); }
+        }
+
+
         public ComboboxEditor()
         {
             DataContextChanged += OnDataContextChanged;
