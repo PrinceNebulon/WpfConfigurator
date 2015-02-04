@@ -6,6 +6,7 @@
     <Grid>
         <wpfConfiguratorLib:WpfConfigurator Name="WpfConfigurator" 
                                             SaveRequested="WpfConfigurator_OnSaveRequested" 
+                                            CancelRequested="WpfConfigurator_OnCancelRequested"
                                             LabelWidthPercentage="30" 
                                             ContentMinWidth="200"/>
     </Grid>

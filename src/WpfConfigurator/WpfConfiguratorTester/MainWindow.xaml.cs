@@ -40,5 +40,17 @@ namespace WpfConfiguratorTester
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void WpfConfigurator_OnCancelRequested()
+        {
+            try
+            {
+                Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

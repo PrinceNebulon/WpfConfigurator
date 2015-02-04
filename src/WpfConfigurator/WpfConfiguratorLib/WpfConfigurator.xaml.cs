@@ -20,6 +20,10 @@ namespace WpfConfiguratorLib
 
         public event SaveRequestedHandler SaveRequested;
 
+        public delegate void CancelRequestedHandler();
+
+        public event CancelRequestedHandler CancelRequested;
+
         public static DependencyProperty LabelWidthPercentageProperty = DependencyProperty.Register(
             "LabelWidthPercentage", typeof(double), typeof(WpfConfigurator), new PropertyMetadata((double)20));
 
@@ -72,6 +76,18 @@ namespace WpfConfiguratorLib
             }
         }
 
+        private void RaiseCancelRequested()
+        {
+            try
+            {
+                if (CancelRequested != null) CancelRequested();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
         #endregion
 
 
@@ -86,7 +102,7 @@ namespace WpfConfiguratorLib
         {
             try
             {
-                Console.WriteLine("Val={0}", LabelWidthPercentage);
+                RaiseCancelRequested();
             }
             catch (Exception ex)
             {
