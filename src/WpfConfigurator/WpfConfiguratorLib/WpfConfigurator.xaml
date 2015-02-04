@@ -8,8 +8,8 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <DockPanel>
         <DockPanel DockPanel.Dock="Bottom" LastChildFill="False">
-            <Button Margin="2" Padding="6,2" DockPanel.Dock="Right" Click="Cancel_OnClick">Cancel</Button>
-            <Button Margin="2" Padding="6,2" DockPanel.Dock="Right" Click="Save_OnClick">Save</Button>
+            <Button Margin="2,2,0,0" Padding="6,2" DockPanel.Dock="Right" Click="Cancel_OnClick">Cancel</Button>
+            <Button Margin="2,2,2,0" Padding="6,2" DockPanel.Dock="Right" Click="Save_OnClick">Save</Button>
         </DockPanel>
         
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
