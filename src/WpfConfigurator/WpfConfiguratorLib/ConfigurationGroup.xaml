@@ -27,7 +27,7 @@
         
         <Grid Grid.Column="0" Background="{Binding Path=Brush}"></Grid>
 
-        <StackPanel Orientation="Vertical" Grid.Column="1" Margin="0,3">
+        <StackPanel Orientation="Vertical" Grid.Column="1" Margin="0">
             <StackPanel Orientation="Vertical" Background="{StaticResource Gray2Brush}">
                 <Label DockPanel.Dock="Top" Content="{Binding Path=MergedDisplayName}" FontSize="16" FontWeight="Bold" />
                 <Label DockPanel.Dock="Top" Content="{Binding Path=MergedDescription}" FontSize="12" Foreground="Gray" />
