@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:wpfConfiguratorLib="clr-namespace:WpfConfiguratorLib"
              xmlns:view="clr-namespace:WpfConfiguratorLib.view"
              mc:Ignorable="d" Name="TheWindow"
              d:DesignHeight="300" d:DesignWidth="300">
@@ -14,7 +13,7 @@
         </DockPanel>
         
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-            <wpfConfiguratorLib:ConfigurationGroup 
+            <view:ConfigurationGroup 
                 LabelWidthPercentage="{Binding ElementName=TheWindow, Path=LabelWidthPercentage}" 
                 MinWidth="{Binding ElementName=TheWindow, Path=ContentMinWidth}"
                 MaxWidth="{Binding ElementName=TheWindow, Path=ContentMaxWidth}"/>

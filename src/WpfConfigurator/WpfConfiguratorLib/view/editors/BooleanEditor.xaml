@@ -11,7 +11,7 @@
             <helpers:GridLengthPercentageConverter x:Key="GridLengthPercentageConverter" />
             <helpers:GridLengthPercentageInverseConverter x:Key="GridLengthPercentageInverseConverter" />
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../resources/Colors.xaml" />
+                <ResourceDictionary Source="../../resources/Colors.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>

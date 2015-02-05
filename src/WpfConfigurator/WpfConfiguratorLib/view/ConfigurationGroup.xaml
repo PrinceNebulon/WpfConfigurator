@@ -13,7 +13,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="resources/Colors.xaml" />
+                <ResourceDictionary Source="../resources/Colors.xaml" />
             </ResourceDictionary.MergedDictionaries>
             
             <helpers:PropertyEditorDataTemplateSelector x:Key="PropertyEditorDataTemplateSelector" />
@@ -54,7 +54,7 @@
             <ItemsControl ItemsSource="{Binding Path=Children}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <wpfConfiguratorLib:ConfigurationGroup LabelWidthPercentage="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, Path=LabelWidthPercentage}" Margin="2,2,0,2" />
+                        <view:ConfigurationGroup LabelWidthPercentage="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, Path=LabelWidthPercentage}" Margin="2,2,0,2" />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>

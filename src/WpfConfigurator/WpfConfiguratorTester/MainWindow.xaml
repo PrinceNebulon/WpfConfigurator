@@ -1,7 +1,6 @@
 ﻿<Window x:Class="WpfConfiguratorTester.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:wpfConfiguratorLib="clr-namespace:WpfConfiguratorLib;assembly=WpfConfiguratorLib"
         xmlns:view="clr-namespace:WpfConfiguratorLib.view;assembly=WpfConfiguratorLib"
         Title="MainWindow" Height="350" Width="525">
     <Grid>

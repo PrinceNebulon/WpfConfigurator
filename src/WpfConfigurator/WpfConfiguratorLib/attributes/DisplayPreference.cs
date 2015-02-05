@@ -11,7 +11,6 @@ namespace WpfConfiguratorLib.attributes
         Default,
         SelectionDropdown,
         SelectionSingleList,
-        SelectionDualList,
-
+        SelectionDualList
     }
 }
