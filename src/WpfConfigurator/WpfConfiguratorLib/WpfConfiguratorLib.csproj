@@ -53,23 +53,27 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="ConfigurationGroup.xaml">
+    <Page Include="view\ConfigurationGroup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="editors\BooleanEditor.xaml">
+    <Page Include="view\editors\BooleanEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="editors\ComboboxEditor.xaml">
+    <Page Include="view\editors\ComboboxEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="editors\NumericEditor.xaml">
+    <Page Include="view\editors\ListEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="editors\StringEditor.xaml">
+    <Page Include="view\editors\NumericEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\editors\StringEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -77,35 +81,39 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="WpfConfigurator.xaml">
+    <Page Include="view\WpfConfigurator.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="attributes\ConfigGroupPropertyAttribute.cs" />
     <Compile Include="attributes\ConfigProperty.cs" />
     <Compile Include="attributes\ConfigPropertyInfo.cs" />
+    <Compile Include="attributes\DisplayPreference.cs" />
     <Compile Include="ConfigManager.cs" />
-    <Compile Include="ConfigurationGroup.xaml.cs">
+    <Compile Include="view\ConfigurationGroup.xaml.cs">
       <DependentUpon>ConfigurationGroup.xaml</DependentUpon>
     </Compile>
-    <Compile Include="editors\BooleanEditor.xaml.cs">
+    <Compile Include="view\editors\BooleanEditor.xaml.cs">
       <DependentUpon>BooleanEditor.xaml</DependentUpon>
     </Compile>
-    <Compile Include="editors\ComboboxEditor.xaml.cs">
+    <Compile Include="view\editors\ComboboxEditor.xaml.cs">
       <DependentUpon>ComboboxEditor.xaml</DependentUpon>
     </Compile>
-    <Compile Include="editors\helpers\GridLengthPercentageConverter.cs" />
-    <Compile Include="editors\helpers\GridLengthPercentageInverseConverter.cs" />
-    <Compile Include="editors\helpers\PropertyEditorDataTemplateSelector.cs" />
-    <Compile Include="editors\NumericEditor.xaml.cs">
+    <Compile Include="view\editors\helpers\GridLengthPercentageConverter.cs" />
+    <Compile Include="view\editors\helpers\GridLengthPercentageInverseConverter.cs" />
+    <Compile Include="view\editors\helpers\PropertyEditorDataTemplateSelector.cs" />
+    <Compile Include="view\editors\ListEditor.xaml.cs">
+      <DependentUpon>ListEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\editors\NumericEditor.xaml.cs">
       <DependentUpon>NumericEditor.xaml</DependentUpon>
     </Compile>
-    <Compile Include="editors\StringEditor.xaml.cs">
+    <Compile Include="view\editors\StringEditor.xaml.cs">
       <DependentUpon>StringEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="entities\ConfigGroup.cs" />
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="WpfConfigurator.xaml.cs">
+    <Compile Include="view\WpfConfigurator.xaml.cs">
       <DependentUpon>WpfConfigurator.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>

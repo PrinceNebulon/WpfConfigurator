@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace WpfConfiguratorLib.editors.helpers
+namespace WpfConfiguratorLib.view.editors.helpers
 {
     public class GridLengthPercentageInverseConverter : IValueConverter
     {

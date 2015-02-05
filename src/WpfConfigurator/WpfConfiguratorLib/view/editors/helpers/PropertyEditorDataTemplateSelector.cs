@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using WpfConfiguratorLib.attributes;
 
-namespace WpfConfiguratorLib.editors.helpers
+namespace WpfConfiguratorLib.view.editors.helpers
 {
     public class PropertyEditorDataTemplateSelector : DataTemplateSelector
     {

@@ -1,15 +1,15 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace WpfConfiguratorLib
+namespace WpfConfiguratorLib.view.editors
 {
     /// <summary>
-    /// Interaction logic for ConfigurationGroup.xaml
+    /// Interaction logic for BooleanEditor.xaml
     /// </summary>
-    public partial class ConfigurationGroup : UserControl
+    public partial class BooleanEditor : UserControl
     {
         public static DependencyProperty LabelWidthPercentageProperty = DependencyProperty.Register(
-            "LabelWidthPercentage", typeof(double), typeof(ConfigurationGroup), new PropertyMetadata((double)20));
+            "LabelWidthPercentage", typeof(double), typeof(BooleanEditor), new PropertyMetadata((double)20));
 
         public double LabelWidthPercentage
         {
@@ -17,7 +17,8 @@ namespace WpfConfiguratorLib
             set { SetValue(LabelWidthPercentageProperty, value); }
         }
 
-        public ConfigurationGroup()
+
+        public BooleanEditor()
         {
             InitializeComponent();
         }

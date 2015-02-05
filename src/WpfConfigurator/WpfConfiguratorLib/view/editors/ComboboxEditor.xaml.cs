@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using WpfConfiguratorLib.attributes;
 
-namespace WpfConfiguratorLib.editors
+namespace WpfConfiguratorLib.view.editors
 {
     /// <summary>
     /// Interaction logic for ComboboxEditor.xaml

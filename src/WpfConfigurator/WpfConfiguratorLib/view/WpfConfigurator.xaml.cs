@@ -2,7 +2,7 @@
 using System.Windows;
 using WpfConfiguratorLib.entities;
 
-namespace WpfConfiguratorLib
+namespace WpfConfiguratorLib.view
 {
     public partial class WpfConfigurator
     {

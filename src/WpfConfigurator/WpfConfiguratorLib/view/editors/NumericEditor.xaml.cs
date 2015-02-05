@@ -1,15 +1,15 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace WpfConfiguratorLib.editors
+namespace WpfConfiguratorLib.view.editors
 {
     /// <summary>
-    /// Interaction logic for StringEditor.xaml
+    /// Interaction logic for NumericEditor.xaml
     /// </summary>
-    public partial class StringEditor : UserControl
+    public partial class NumericEditor : UserControl
     {
         public static DependencyProperty LabelWidthPercentageProperty = DependencyProperty.Register(
-            "LabelWidthPercentage", typeof(double), typeof(StringEditor), new PropertyMetadata((double)20));
+            "LabelWidthPercentage", typeof(double), typeof(NumericEditor), new PropertyMetadata((double)20));
 
         public double LabelWidthPercentage
         {
@@ -17,7 +17,8 @@ namespace WpfConfiguratorLib.editors
             set { SetValue(LabelWidthPercentageProperty, value); }
         }
 
-        public StringEditor()
+
+        public NumericEditor()
         {
             InitializeComponent();
         }
