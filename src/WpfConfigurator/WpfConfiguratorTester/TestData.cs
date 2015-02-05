@@ -25,7 +25,7 @@ namespace WpfConfiguratorTester
         [ConfigProperty("Upgrade Required", DefaultValue = true, IsPrivate = true)]
         public bool UpgradeRequired { get; set; }
 
-        [ConfigProperty("First Name", Description = "Your first name")]
+        [ConfigProperty("First Name", Description = "Your first name", DefaultValue = "Fred")]
         public string FirstName { get; set; }
 
         [ConfigProperty("Last Name", Description = "Your last name")]
@@ -42,6 +42,18 @@ namespace WpfConfiguratorTester
 
         [ConfigGroupPropertyAttribute("Shipping Address", Color = "#FF0000")]
         public AddressData Address2 { get; set; }
+
+        [ConfigProperty("Household Member Count", Description = "The number of people in the household", DefaultValue = 2)]
+        public int HouseholdMembers { get; set; }
+
+        [ConfigProperty("Monthly Rent", Description = "The dollar amount of the monthly rent payment", DefaultValue = 123)]
+        public long Rent { get; set; }
+
+        [ConfigProperty("Monthly Utilities", Description = "The dollar amount of the monthly utilities", DefaultValue = 98.76)]
+        public double Utilities { get; set; }
+
+        [ConfigProperty("Monthly Insurance", Description = "The dollar amount of the monthly property insurance payment", DefaultValue = 321.12)]
+        public float Insurance { get; set; }
     }
 
     public class AddressData : ConfigGroup

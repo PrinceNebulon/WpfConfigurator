@@ -13,11 +13,57 @@ namespace WpfConfiguratorLib.entities
     {
         #region Private Fields
 
+        internal bool IsInitialized { get; set; }
+
         private void ValueChangedDelegate(string propertyName, object value)
         {
             try
             {
-                GetType().InvokeMember(propertyName, BindingFlags.SetProperty, null, this, new[] { value });
+                var property = GetType().GetProperty(propertyName);
+
+                if (property.PropertyType == typeof(int))
+                {
+                    int intVal;
+                    if (int.TryParse(value.ToString(), out intVal))
+                    {
+                        GetType().InvokeMember(propertyName, BindingFlags.SetProperty, null, this, new object[] { intVal });
+                        return;
+                    }
+                }
+
+                if (property.PropertyType == typeof(double))
+                {
+                    double doubleVal;
+                    if (double.TryParse(value.ToString(), out doubleVal))
+                    {
+                        GetType().InvokeMember(propertyName, BindingFlags.SetProperty, null, this, new object[] { doubleVal });
+                        return;
+                    }
+                }
+
+                if (property.PropertyType == typeof(long))
+                {
+                    long longVal;
+                    if (long.TryParse(value.ToString(), out longVal))
+                    {
+                        GetType().InvokeMember(propertyName, BindingFlags.SetProperty, null, this, new object[] { longVal });
+                        return;
+                    }
+                }
+
+                if (property.PropertyType == typeof(float))
+                {
+                    float floatVal;
+                    if (float.TryParse(value.ToString(), out floatVal))
+                    {
+                        GetType().InvokeMember(propertyName, BindingFlags.SetProperty, null, this, new object[] { floatVal });
+                        return;
+                    }
+                }
+
+                // Default
+                Console.WriteLine("Attempting to set {0} using the default invocation", propertyName);
+                GetType().InvokeMember(propertyName, BindingFlags.SetProperty, null, this, new [] { value });
             }
             catch (Exception ex)
             {
@@ -33,19 +79,25 @@ namespace WpfConfiguratorLib.entities
 
         #region Public Properties
 
+        [JsonIgnore]
         public abstract string DisplayName { get; }
 
-        public string PropertyDisplayName { get; set; }
+        [JsonIgnore]
+        public string PropertyDisplayName { get; private set; }
 
+        [JsonIgnore]
         public string MergedDisplayName
         {
             get { return string.IsNullOrEmpty(PropertyDisplayName) ? DisplayName : PropertyDisplayName; }
         }
 
+        [JsonIgnore]
         public abstract string Description { get; }
 
-        public string PropertyDescription { get; set; }
+        [JsonIgnore]
+        public string PropertyDescription { get; private set; }
 
+        [JsonIgnore]
         public string MergedDescription
         {
             get { return string.IsNullOrEmpty(PropertyDescription) ? Description : PropertyDescription; }
@@ -114,8 +166,16 @@ namespace WpfConfiguratorLib.entities
                     // Create new instance if we failed to get a value (expected: unset object)
                     if (propertyData == null)
                     {
+                        // Create instance
                         propertyData = Activator.CreateInstance(propertyInfo.PropertyType) as ConfigGroup;
+
+                        // Set the new value
                         ValueChangedDelegate(propertyInfo.Name, propertyData);
+                    }
+                    else
+                    {
+                        // Mark as initialized since the property was retrieved
+                        propertyData.IsInitialized = true;
                     }
 
                     // Override things
@@ -126,6 +186,7 @@ namespace WpfConfiguratorLib.entities
                     if (!string.IsNullOrEmpty(configPropertyAttribute.Color))
                         propertyData.Brush =
                             new SolidColorBrush((Color) ColorConverter.ConvertFromString(configPropertyAttribute.Color));
+
 
                     // Add the item to the collection
                     configGroups.Add(propertyData);
@@ -154,20 +215,27 @@ namespace WpfConfiguratorLib.entities
             // Get property
             var property = GetType().GetProperty(propertyName);
 
-            // Try to return from set values
-            var value  = property.GetValue(this);
-            if (value != null) return value;
+            // Set default value since the object isn't initialized
+            if (!IsInitialized)
+            {
+                // Get the ConfigPropertyAttribute attribute
+                var configPropertyAttribute =
+                    property.GetCustomAttributes().OfType<ConfigPropertyAttribute>().FirstOrDefault();
 
-            // Get the ConfigPropertyAttribute attribute
-            var configPropertyAttribute =
-                property.GetCustomAttributes().OfType<ConfigPropertyAttribute>().FirstOrDefault();
+                var newValue = configPropertyAttribute != null
+                    ? configPropertyAttribute.DefaultValue
+                    : property.PropertyType.IsValueType
+                        ? Activator.CreateInstance(property.PropertyType)
+                        : null;
+                if (newValue != null)
+                {
+                    ValueChangedDelegate(propertyName, newValue);
+                }
+            }
 
-            // Return the attribute's specified default value or default value of the property's type
-            return configPropertyAttribute != null
-                ? configPropertyAttribute.DefaultValue
-                : property.PropertyType.IsValueType
-                    ? Activator.CreateInstance(property.PropertyType)
-                    : null;
+            // Return set value
+            var val = property.GetValue(this);
+            return val;
         }
 
         private SolidColorBrush PickBrush()

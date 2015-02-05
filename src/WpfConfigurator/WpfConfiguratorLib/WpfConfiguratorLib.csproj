@@ -65,6 +65,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="editors\NumericEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="editors\StringEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -93,6 +97,9 @@
     <Compile Include="editors\helpers\GridLengthPercentageConverter.cs" />
     <Compile Include="editors\helpers\GridLengthPercentageInverseConverter.cs" />
     <Compile Include="editors\helpers\PropertyEditorDataTemplateSelector.cs" />
+    <Compile Include="editors\NumericEditor.xaml.cs">
+      <DependentUpon>NumericEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="editors\StringEditor.xaml.cs">
       <DependentUpon>StringEditor.xaml</DependentUpon>
     </Compile>

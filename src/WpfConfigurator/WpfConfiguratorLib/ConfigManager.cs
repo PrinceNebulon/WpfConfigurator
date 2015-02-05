@@ -50,6 +50,9 @@ namespace WpfConfiguratorLib
             {
                 var json = JsonConvert.SerializeObject(configGroup, Formatting.Indented);
                 File.WriteAllText(Path.Combine(WorkingDirectory, configGroup.DisplayName + ".config"), json);
+
+                // Mark as initialized after saving
+                configGroup.IsInitialized = true;
             }
             catch (Exception ex)
             {
@@ -73,7 +76,16 @@ namespace WpfConfiguratorLib
                 {
                     // Deserialize
                     var serializer = new JsonSerializer();
-                    return (T) serializer.Deserialize(file, typeof (T));
+                    var value = (T) serializer.Deserialize(file, typeof (T));
+
+                    // Mark as initialized after loading
+                    var configGroup = value as ConfigGroup;
+                    if (configGroup != null)
+                    {
+                        configGroup.IsInitialized = true;
+                    }
+
+                    return value;
                 }
             }
             catch (Exception ex)

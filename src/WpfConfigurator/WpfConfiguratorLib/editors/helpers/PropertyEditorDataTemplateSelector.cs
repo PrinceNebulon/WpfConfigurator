@@ -22,6 +22,8 @@ namespace WpfConfiguratorLib.editors.helpers
                     return elem.FindResource("BooleanEditor") as DataTemplate;
                 if (data.Type.IsEnum)
                     return elem.FindResource("ComboboxEditor") as DataTemplate;
+                if (IsNumericType(data.Type))
+                    return elem.FindResource("NumericEditor") as DataTemplate;
             }
             catch (Exception ex)
             {
@@ -29,6 +31,27 @@ namespace WpfConfiguratorLib.editors.helpers
             }
 
             return null;
+        }
+
+        private bool IsNumericType(Type type)
+        {
+            switch (Type.GetTypeCode(type))
+            {
+                case TypeCode.Byte:
+                case TypeCode.SByte:
+                case TypeCode.UInt16:
+                case TypeCode.UInt32:
+                case TypeCode.UInt64:
+                case TypeCode.Int16:
+                case TypeCode.Int32:
+                case TypeCode.Int64:
+                case TypeCode.Decimal:
+                case TypeCode.Double:
+                case TypeCode.Single:
+                    return true;
+                default:
+                    return false;
+            }
         }
     }
 }
