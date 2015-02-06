@@ -53,7 +53,19 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="resources\Controls.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\ConfigList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="view\ConfigurationGroup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\EditorContentPresenter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -62,10 +74,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="view\editors\ComboboxEditor.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="view\editors\ListEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -86,12 +94,21 @@
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="attributes\ConfigGroupPropertyAttribute.cs" />
+    <Compile Include="attributes\ConfigListPropertyAttribute.cs" />
+    <Compile Include="attributes\ConfigListPropertyInfo.cs" />
     <Compile Include="attributes\ConfigProperty.cs" />
     <Compile Include="attributes\ConfigPropertyInfo.cs" />
     <Compile Include="attributes\DisplayPreference.cs" />
     <Compile Include="ConfigManager.cs" />
+    <Compile Include="entities\Observable.cs" />
+    <Compile Include="view\ConfigList.xaml.cs">
+      <DependentUpon>ConfigList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="view\ConfigurationGroup.xaml.cs">
       <DependentUpon>ConfigurationGroup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\EditorContentPresenter.xaml.cs">
+      <DependentUpon>EditorContentPresenter.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\editors\BooleanEditor.xaml.cs">
       <DependentUpon>BooleanEditor.xaml</DependentUpon>
@@ -101,10 +118,8 @@
     </Compile>
     <Compile Include="view\editors\helpers\GridLengthPercentageConverter.cs" />
     <Compile Include="view\editors\helpers\GridLengthPercentageInverseConverter.cs" />
+    <Compile Include="view\editors\helpers\ListMultiValueConverter.cs" />
     <Compile Include="view\editors\helpers\PropertyEditorDataTemplateSelector.cs" />
-    <Compile Include="view\editors\ListEditor.xaml.cs">
-      <DependentUpon>ListEditor.xaml</DependentUpon>
-    </Compile>
     <Compile Include="view\editors\NumericEditor.xaml.cs">
       <DependentUpon>NumericEditor.xaml</DependentUpon>
     </Compile>
@@ -142,6 +157,9 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\img\16\add.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,7 +1,12 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using WpfConfiguratorLib.attributes;
+using WpfConfiguratorLib.entities;
 
 namespace WpfConfiguratorLib.view.editors.helpers
 {
@@ -11,10 +16,22 @@ namespace WpfConfiguratorLib.view.editors.helpers
         {
             try
             {
+                // Get objects
                 var elem = container as FrameworkElement;
-                var data = item as ConfigPropertyInfo;
+                if (elem == null) return null;
 
-                if (elem == null || data == null) return null;
+                // Determine template by item type
+                if (item.GetType().IsSubclassOf(typeof(ConfigGroup)))
+                    return elem.FindResource("ConfigurationGroup") as DataTemplate;
+                if (item is ConfigListPropertyInfo)
+                    return elem.FindResource("ConfigList") as DataTemplate;
+                if (IsSubclassOfRawGeneric(typeof(Observable<>), item.GetType()))
+                    return elem.FindResource("BasicStringEditor") as DataTemplate;
+                
+
+                // Determine template by config property type
+                var data = item as ConfigPropertyInfo;
+                if (data == null) return null;
 
                 if (data.Type == typeof(string))
                     return elem.FindResource("StringEditor") as DataTemplate;
@@ -24,6 +41,8 @@ namespace WpfConfiguratorLib.view.editors.helpers
                     return elem.FindResource("ComboboxEditor") as DataTemplate;
                 if (IsNumericType(data.Type))
                     return elem.FindResource("NumericEditor") as DataTemplate;
+                if (IsSubclassOfRawGeneric(typeof(ICollection), data.Type))
+                    return elem.FindResource("ConfigList") as DataTemplate;
             }
             catch (Exception ex)
             {
@@ -52,6 +71,29 @@ namespace WpfConfiguratorLib.view.editors.helpers
                 default:
                     return false;
             }
+        }
+
+        private bool IsSubclassOfRawGeneric(Type generic, Type toCheck)
+        {
+            while (toCheck != null && toCheck != typeof(object))
+            {
+                var cur = toCheck.IsGenericType ? toCheck.GetGenericTypeDefinition() : toCheck;
+
+                // Match on type def?
+                if (generic == cur)
+                {
+                    return true;
+                }
+
+                // Match on interface implementation?
+                var interfaces = cur.GetInterfaces();
+                if (interfaces.Any(i => i.GUID == generic.GUID))
+                    return true;
+
+                // Check against base type
+                toCheck = toCheck.BaseType;
+            }
+            return false;
         }
     }
 }

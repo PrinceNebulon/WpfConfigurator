@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Media;
@@ -14,62 +17,6 @@ namespace WpfConfiguratorLib.entities
         #region Private Fields
 
         internal bool IsInitialized { get; set; }
-
-        private void ValueChangedDelegate(string propertyName, object value)
-        {
-            try
-            {
-                var property = GetType().GetProperty(propertyName);
-
-                if (property.PropertyType == typeof(int))
-                {
-                    int intVal;
-                    if (int.TryParse(value.ToString(), out intVal))
-                    {
-                        GetType().InvokeMember(propertyName, BindingFlags.SetProperty, null, this, new object[] { intVal });
-                        return;
-                    }
-                }
-
-                if (property.PropertyType == typeof(double))
-                {
-                    double doubleVal;
-                    if (double.TryParse(value.ToString(), out doubleVal))
-                    {
-                        GetType().InvokeMember(propertyName, BindingFlags.SetProperty, null, this, new object[] { doubleVal });
-                        return;
-                    }
-                }
-
-                if (property.PropertyType == typeof(long))
-                {
-                    long longVal;
-                    if (long.TryParse(value.ToString(), out longVal))
-                    {
-                        GetType().InvokeMember(propertyName, BindingFlags.SetProperty, null, this, new object[] { longVal });
-                        return;
-                    }
-                }
-
-                if (property.PropertyType == typeof(float))
-                {
-                    float floatVal;
-                    if (float.TryParse(value.ToString(), out floatVal))
-                    {
-                        GetType().InvokeMember(propertyName, BindingFlags.SetProperty, null, this, new object[] { floatVal });
-                        return;
-                    }
-                }
-
-                // Default
-                Console.WriteLine("Attempting to set {0} using the default invocation", propertyName);
-                GetType().InvokeMember(propertyName, BindingFlags.SetProperty, null, this, new [] { value });
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-        }
 
         private SolidColorBrush _brush;
 
@@ -131,8 +78,35 @@ namespace WpfConfiguratorLib.entities
                     if (configPropertyAttribute.IsPrivate) continue;
 
                     // Add to list
-                    properties.Add(ConfigPropertyInfo.FromConfigPropertyAttribute(configPropertyAttribute,
-                        propertyInfo.Name, GetValue(propertyInfo.Name), propertyInfo.PropertyType, ValueChangedDelegate));
+                    var info = ConfigPropertyInfo.FromConfigPropertyAttribute(configPropertyAttribute,
+                        propertyInfo.Name, GetValue(propertyInfo.Name), propertyInfo.PropertyType, OnValueChanged);
+
+                    // Do list things
+                    if (info is ConfigListPropertyInfo)
+                    {
+                        var listInfo = info as ConfigListPropertyInfo;
+
+                        // Initialize empty list
+                        if (listInfo.Value == null)
+                        {
+                            var list =
+                                Activator.CreateInstance(
+                                    (typeof (ObservableCollection<>).MakeGenericType(listInfo.DefaultListItemType)));
+                            listInfo.Value = list;
+                        }
+                        else
+                        {
+                            foreach (var item in listInfo.Value as IEnumerable)
+                            {
+                                var configGroup = item as ConfigGroup;
+                                if (configGroup != null)
+                                    configGroup.IsInitialized = true;
+                            }
+                        }
+                    }
+
+                    // Add item to properties list
+                    properties.Add(info);
                 }
 
                 // Return list of properties
@@ -169,8 +143,11 @@ namespace WpfConfiguratorLib.entities
                         // Create instance
                         propertyData = Activator.CreateInstance(propertyInfo.PropertyType) as ConfigGroup;
 
+                        // Skip if we didn't create anything
+                        if (propertyData == null) continue;
+
                         // Set the new value
-                        ValueChangedDelegate(propertyInfo.Name, propertyData);
+                        OnValueChanged(propertyInfo.Name, propertyData);
                     }
                     else
                     {
@@ -184,9 +161,10 @@ namespace WpfConfiguratorLib.entities
                     if (!string.IsNullOrEmpty(configPropertyAttribute.Description))
                         propertyData.PropertyDescription = configPropertyAttribute.Description;
                     if (!string.IsNullOrEmpty(configPropertyAttribute.Color))
-                        propertyData.Brush =
-                            new SolidColorBrush((Color) ColorConverter.ConvertFromString(configPropertyAttribute.Color));
-
+                    {
+                        var color = ColorConverter.ConvertFromString(configPropertyAttribute.Color);
+                        propertyData.Brush = color != null ? new SolidColorBrush((Color)color) : PickBrush();
+                    }
 
                     // Add the item to the collection
                     configGroups.Add(propertyData);
@@ -229,7 +207,7 @@ namespace WpfConfiguratorLib.entities
                         : null;
                 if (newValue != null)
                 {
-                    ValueChangedDelegate(propertyName, newValue);
+                    OnValueChanged(propertyName, newValue);
                 }
             }
 
@@ -246,6 +224,62 @@ namespace WpfConfiguratorLib.entities
                     (byte) rnd.Next(0, 255),
                     (byte) rnd.Next(0, 255),
                     (byte) rnd.Next(0, 255)));
+        }
+
+        private void OnValueChanged(string propertyName, object value)
+        {
+            try
+            {
+                var property = GetType().GetProperty(propertyName);
+
+                if (property.PropertyType == typeof(int))
+                {
+                    int intVal;
+                    if (int.TryParse(value.ToString(), out intVal))
+                    {
+                        GetType().InvokeMember(propertyName, BindingFlags.SetProperty, null, this, new object[] { intVal });
+                        return;
+                    }
+                }
+
+                if (property.PropertyType == typeof(double))
+                {
+                    double doubleVal;
+                    if (double.TryParse(value.ToString(), out doubleVal))
+                    {
+                        GetType().InvokeMember(propertyName, BindingFlags.SetProperty, null, this, new object[] { doubleVal });
+                        return;
+                    }
+                }
+
+                if (property.PropertyType == typeof(long))
+                {
+                    long longVal;
+                    if (long.TryParse(value.ToString(), out longVal))
+                    {
+                        GetType().InvokeMember(propertyName, BindingFlags.SetProperty, null, this, new object[] { longVal });
+                        return;
+                    }
+                }
+
+                if (property.PropertyType == typeof(float))
+                {
+                    float floatVal;
+                    if (float.TryParse(value.ToString(), out floatVal))
+                    {
+                        GetType().InvokeMember(propertyName, BindingFlags.SetProperty, null, this, new object[] { floatVal });
+                        return;
+                    }
+                }
+
+                // Default
+                Console.WriteLine("Attempting to set {0} using the default invocation", propertyName);
+                GetType().InvokeMember(propertyName, BindingFlags.SetProperty, null, this, new[] { value });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         #endregion

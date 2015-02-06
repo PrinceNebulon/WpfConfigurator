@@ -3,10 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:wpfConfiguratorLib="clr-namespace:WpfConfiguratorLib"
              xmlns:entities="clr-namespace:WpfConfiguratorLib.entities"
              xmlns:helpers="clr-namespace:WpfConfiguratorLib.view.editors.helpers"
-             xmlns:editors="clr-namespace:WpfConfiguratorLib.view.editors"
              xmlns:view="clr-namespace:WpfConfiguratorLib.view"
              mc:Ignorable="d" Name="TheWindow"
              d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance entities:ConfigGroup}">
@@ -15,14 +13,14 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../resources/Colors.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            
-            <helpers:PropertyEditorDataTemplateSelector x:Key="PropertyEditorDataTemplateSelector" />
+
+            <helpers:ListMultiValueConverter x:Key="ListMultiValueConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
     
     <Grid Margin="0" Background="White">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2" />
+            <ColumnDefinition Width="4" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         
@@ -34,30 +32,14 @@
                 <Label DockPanel.Dock="Top" Content="{Binding Path=MergedDescription}" FontSize="12" Foreground="Gray" />
             </StackPanel>
 
-            <ItemsControl ItemsSource="{Binding Path=Properties}" ItemTemplateSelector="{StaticResource PropertyEditorDataTemplateSelector}">
-                <ItemsControl.Resources>
-                    <DataTemplate x:Key="StringEditor">
-                        <editors:StringEditor LabelWidthPercentage="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, Path=LabelWidthPercentage}" />
-                    </DataTemplate>
-                    <DataTemplate x:Key="BooleanEditor">
-                        <editors:BooleanEditor LabelWidthPercentage="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, Path=LabelWidthPercentage}" />
-                    </DataTemplate>
-                    <DataTemplate x:Key="ComboboxEditor">
-                        <editors:ComboboxEditor LabelWidthPercentage="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, Path=LabelWidthPercentage}" />
-                    </DataTemplate>
-                    <DataTemplate x:Key="NumericEditor">
-                        <editors:NumericEditor LabelWidthPercentage="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, Path=LabelWidthPercentage}" />
-                    </DataTemplate>
-                </ItemsControl.Resources>
-            </ItemsControl>
-
-            <ItemsControl ItemsSource="{Binding Path=Children}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <view:ConfigurationGroup LabelWidthPercentage="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, Path=LabelWidthPercentage}" Margin="2,2,0,2" />
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+            <view:EditorContentPresenter LabelWidthPercentage="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, Path=LabelWidthPercentage}">
+                <view:EditorContentPresenter.DataContext>
+                    <MultiBinding Converter="{StaticResource ListMultiValueConverter}">
+                        <Binding Path="Properties" />
+                        <Binding Path="Children" />
+                    </MultiBinding>
+                </view:EditorContentPresenter.DataContext>
+            </view:EditorContentPresenter>
         </StackPanel>
     </Grid>
 </UserControl>

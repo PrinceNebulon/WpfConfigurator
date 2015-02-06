@@ -1,4 +1,7 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Windows.Documents;
 using System.Windows.Media;
 using WpfConfiguratorLib.attributes;
 using WpfConfiguratorLib.entities;
@@ -37,10 +40,10 @@ namespace WpfConfiguratorTester
         [ConfigProperty("Account Type", Description = "The type of the account")]
         public AccountType AccountType { get; set; }
 
-        [ConfigGroupPropertyAttribute("Billing Address", Description = "The address to which your bill will be sent", Color = "#1997CA")]
+        [ConfigGroupProperty("Billing Address", Description = "The address to which your bill will be sent", Color = "#1997CA")]
         public AddressData Address { get; set; }
 
-        [ConfigGroupPropertyAttribute("Shipping Address", Color = "#FF0000")]
+        [ConfigGroupProperty("Shipping Address", Color = "#FF0000")]
         public AddressData Address2 { get; set; }
 
         [ConfigProperty("Household Member Count", Description = "The number of people in the household", DefaultValue = 2)]
@@ -54,6 +57,15 @@ namespace WpfConfiguratorTester
 
         [ConfigProperty("Monthly Insurance", Description = "The dollar amount of the monthly property insurance payment", DefaultValue = 321.12)]
         public float Insurance { get; set; }
+
+        [ConfigListProperty("Alternate Addresses", Description = "Other places where we can hunt you down")]
+        public ObservableCollection<AddressData> Addresses { get; set; }
+
+        [ConfigListProperty("Authorized Names", Description = "Names of people that are authorized on the account")]
+        public ObservableCollection<Observable<string>> AuthorizedNames { get; set; }
+
+        [ConfigListProperty("Numbers", Description = "A collection of numbers")]
+        public ObservableCollection<Observable<int>> Numbers { get; set; }
     }
 
     public class AddressData : ConfigGroup

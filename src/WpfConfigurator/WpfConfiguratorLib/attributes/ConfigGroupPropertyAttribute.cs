@@ -4,7 +4,8 @@ namespace WpfConfiguratorLib.attributes
     {
         public string Color { get; set; }
 
-        public ConfigGroupPropertyAttribute(string displayName) : base(displayName)
+        public ConfigGroupPropertyAttribute(string displayName)
+            : base(displayName)
         {
             DisplayName = displayName;
         }
