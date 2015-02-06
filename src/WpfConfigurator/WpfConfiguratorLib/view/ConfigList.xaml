@@ -14,13 +14,60 @@
             </ResourceDictionary.MergedDictionaries>
 
             <Style x:Key="AddItemButtonStyle" BasedOn="{StaticResource NoChromeButton16}" TargetType="Button">
-                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="Visibility" Value="Visible" />
+                <Setter Property="VerticalAlignment" Value="Bottom" />
                 <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="DockPanel.Dock" Value="Bottom" />
+                <Setter Property="Margin" Value="0,0,4,4" />
                 <Setter Property="Background">
                     <Setter.Value>
                         <ImageBrush ImageSource="../resources/img/16/add.png" TileMode="None" Stretch="None" AlignmentX="Center" AlignmentY="Center" />
                     </Setter.Value>
                 </Setter>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding ElementName=TheWindow, Path=IsCollapsed}" Value="true">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="ExpandCollapseButton" BasedOn="{StaticResource NoChromeButton16}" TargetType="Button">
+                <Setter Property="VerticalAlignment" Value="Top" />
+                <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="DockPanel.Dock" Value="Top" />
+                <Setter Property="Margin" Value="0,4,4,0" />
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <ImageBrush ImageSource="../resources/img/16/collapse.png" TileMode="None" Stretch="None" AlignmentX="Center" AlignmentY="Center" />
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding ElementName=TheWindow, Path=IsCollapsed}" Value="True">
+                        <Setter Property="Background">
+                            <Setter.Value>
+                                <ImageBrush ImageSource="../resources/img/16/expand.png" TileMode="None" Stretch="None" AlignmentX="Center" AlignmentY="Center" />
+                            </Setter.Value>
+                        </Setter>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="CollapserStartOpenStyle" TargetType="FrameworkElement">
+                <Setter Property="Visibility" Value="Visible" />
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding ElementName=TheWindow, Path=IsCollapsed}" Value="true">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="CollapserStartClosedStyle" TargetType="FrameworkElement">
+                <Setter Property="Visibility" Value="Collapsed" />
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding ElementName=TheWindow, Path=IsCollapsed}" Value="true">
+                        <Setter Property="Visibility" Value="Visible" />
+                    </DataTrigger>
+                </Style.Triggers>
             </Style>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -35,15 +82,24 @@
 
         <StackPanel Orientation="Vertical" Grid.Column="1" Margin="0">
             <DockPanel Background="{StaticResource Gray2Brush}" LastChildFill="False">
-                <StackPanel Orientation="Vertical" DockPanel.Dock="Left">
-                    <Label DockPanel.Dock="Top" Content="{Binding Path=DisplayName}" FontSize="13" FontWeight="Bold" />
-                    <Label DockPanel.Dock="Top" Content="{Binding Path=Description}" FontSize="12" Foreground="Gray" />
+                <StackPanel Orientation="Vertical" Background="{StaticResource Gray2Brush}" Style="{StaticResource CollapserStartOpenStyle}">
+                    <Label Content="{Binding Path=DisplayName}" FontSize="16" FontWeight="Bold" />
+                    <Label Content="{Binding Path=Description}" FontSize="12" Foreground="Gray" />
                 </StackPanel>
+                <DockPanel Background="{StaticResource Gray2Brush}" Style="{StaticResource CollapserStartClosedStyle}">
+                    <Label DockPanel.Dock="Left" Content="{Binding Path=DisplayName}" FontSize="16" FontWeight="Bold" VerticalAlignment="Bottom" />
+                    <Label Content="{Binding Path=Description}" FontSize="12" Foreground="Gray" VerticalAlignment="Bottom" />
+                </DockPanel>
 
-                <Button Style="{StaticResource AddItemButtonStyle}" DockPanel.Dock="Right" Margin="4" Click="AddItem_OnClick" />
+                <DockPanel Dock="Right">
+                    <Button Style="{StaticResource AddItemButtonStyle}" Click="AddItem_OnClick" />
+                    <Button Style="{StaticResource ExpandCollapseButton}" Click="ExpandCollapse_OnClick" />
+                </DockPanel>
             </DockPanel>
 
-            <view:EditorContentPresenter DataContext="{Binding Path=Value}" LabelWidthPercentage="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, Path=LabelWidthPercentage}" />
+            <view:EditorContentPresenter DataContext="{Binding Path=Value}" 
+                                         LabelWidthPercentage="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, Path=LabelWidthPercentage}" 
+                                         Style="{StaticResource CollapserStartOpenStyle}" />
         </StackPanel>
     </Grid>
 </UserControl>

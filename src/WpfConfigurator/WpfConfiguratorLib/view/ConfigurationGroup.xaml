@@ -12,9 +12,49 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../resources/Colors.xaml" />
+                <ResourceDictionary Source="../resources/Controls.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <helpers:ListMultiValueConverter x:Key="ListMultiValueConverter" />
+
+            <Style x:Key="ExpandCollapseButton" BasedOn="{StaticResource NoChromeButton16}" TargetType="Button">
+                <Setter Property="VerticalAlignment" Value="Top" />
+                <Setter Property="HorizontalAlignment" Value="Right" />
+                <Setter Property="Margin" Value="4" />
+                <Setter Property="DockPanel.Dock" Value="Right" />
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <ImageBrush ImageSource="../resources/img/16/collapse.png" TileMode="None" Stretch="None" AlignmentX="Center" AlignmentY="Center" />
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding ElementName=TheWindow, Path=IsCollapsed}" Value="True">
+                        <Setter Property="Background">
+                            <Setter.Value>
+                                <ImageBrush ImageSource="../resources/img/16/expand.png" TileMode="None" Stretch="None" AlignmentX="Center" AlignmentY="Center" />
+                            </Setter.Value>
+                        </Setter>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="CollapserStartOpenStyle" TargetType="FrameworkElement">
+                <Setter Property="Visibility" Value="Visible" />
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding ElementName=TheWindow, Path=IsCollapsed}" Value="true">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="CollapserStartClosedStyle" TargetType="FrameworkElement">
+                <Setter Property="Visibility" Value="Collapsed" />
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding ElementName=TheWindow, Path=IsCollapsed}" Value="true">
+                        <Setter Property="Visibility" Value="Visible" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
         </ResourceDictionary>
     </UserControl.Resources>
     
@@ -27,12 +67,18 @@
         <Grid Grid.Column="0" Background="{Binding Path=Brush}"></Grid>
 
         <StackPanel Orientation="Vertical" Grid.Column="1" Margin="0">
-            <StackPanel Orientation="Vertical" Background="{StaticResource Gray2Brush}">
-                <Label DockPanel.Dock="Top" Content="{Binding Path=MergedDisplayName}" FontSize="16" FontWeight="Bold" />
-                <Label DockPanel.Dock="Top" Content="{Binding Path=MergedDescription}" FontSize="12" Foreground="Gray" />
+            <StackPanel Orientation="Vertical" Background="{StaticResource Gray2Brush}" Style="{StaticResource CollapserStartOpenStyle}">
+                <Label Content="{Binding Path=MergedDisplayName}" FontSize="16" FontWeight="Bold" />
+                <Label Content="{Binding Path=MergedDescription}" FontSize="12" Foreground="Gray" />
             </StackPanel>
+            <DockPanel Background="{StaticResource Gray2Brush}" Style="{StaticResource CollapserStartClosedStyle}">
+                <Label DockPanel.Dock="Left" Content="{Binding Path=MergedDisplayName}" FontSize="16" FontWeight="Bold" VerticalAlignment="Bottom" />
+                <Label Content="{Binding Path=MergedDescription}" FontSize="12" Foreground="Gray" VerticalAlignment="Bottom" />
+            </DockPanel>
 
-            <view:EditorContentPresenter LabelWidthPercentage="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, Path=LabelWidthPercentage}">
+            <view:EditorContentPresenter 
+                LabelWidthPercentage="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, Path=LabelWidthPercentage}"
+                Style="{StaticResource CollapserStartOpenStyle}">
                 <view:EditorContentPresenter.DataContext>
                     <MultiBinding Converter="{StaticResource ListMultiValueConverter}">
                         <Binding Path="Properties" />
@@ -41,5 +87,7 @@
                 </view:EditorContentPresenter.DataContext>
             </view:EditorContentPresenter>
         </StackPanel>
+        
+        <Button Grid.Column="1" Style="{StaticResource ExpandCollapseButton}" Click="ExpandCollapse_OnClick" />
     </Grid>
 </UserControl>

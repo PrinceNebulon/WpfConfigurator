@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Controls;
 using WpfConfiguratorLib.Annotations;
 using WpfConfiguratorLib.attributes;
 
@@ -13,7 +11,7 @@ namespace WpfConfiguratorLib.view
     /// <summary>
     /// Interaction logic for ConfigList.xaml
     /// </summary>
-    public partial class ConfigList : UserControl, INotifyPropertyChanged
+    public partial class ConfigList : INotifyPropertyChanged
     {
         public static DependencyProperty LabelWidthPercentageProperty = DependencyProperty.Register(
             "LabelWidthPercentage", typeof(double), typeof(ConfigList), new PropertyMetadata((double)20));
@@ -22,6 +20,18 @@ namespace WpfConfiguratorLib.view
         {
             get { return (double)GetValue(LabelWidthPercentageProperty); }
             set { SetValue(LabelWidthPercentageProperty, value); }
+        }
+
+        private bool _isCollapsed = false;
+
+        public bool IsCollapsed
+        {
+            get { return _isCollapsed; }
+            set
+            {
+                _isCollapsed = value;
+                OnPropertyChanged();
+            }
         }
 
 
@@ -78,6 +88,11 @@ namespace WpfConfiguratorLib.view
         {
             PropertyChangedEventHandler handler = PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void ExpandCollapse_OnClick(object sender, RoutedEventArgs e)
+        {
+            IsCollapsed = !IsCollapsed;
         }
     }
 }
