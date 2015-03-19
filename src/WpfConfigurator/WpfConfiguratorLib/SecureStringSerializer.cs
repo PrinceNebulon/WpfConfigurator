@@ -25,6 +25,7 @@ namespace WpfConfiguratorLib
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
             JsonSerializer serializer)
         {
+            if (reader.Value is string) return ConvertToSecureString(reader.Value.ToString());
             var jsonObject = JObject.Load(reader);
             var properties = jsonObject.Properties().ToList();
             return ConvertToSecureString(UnprotectPassword(properties[0].Value.ToString()));
