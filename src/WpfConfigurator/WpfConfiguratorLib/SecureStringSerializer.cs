@@ -83,7 +83,7 @@ namespace WpfConfiguratorLib
             return new string(chars);
         }
 
-        private string ConvertToUnsecureString(SecureString securePassword)
+        public static string ConvertToUnsecureString(SecureString securePassword)
         {
             if (securePassword == null) return "";
 
@@ -99,7 +99,7 @@ namespace WpfConfiguratorLib
             }
         }
 
-        private SecureString ConvertToSecureString(string password)
+        public static SecureString ConvertToSecureString(string password)
         {
             if (string.IsNullOrEmpty(password)) return new SecureString();
 
