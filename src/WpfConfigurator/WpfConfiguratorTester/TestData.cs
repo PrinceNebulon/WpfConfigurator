@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Security;
 using System.Windows.Documents;
 using System.Windows.Media;
 using WpfConfiguratorLib.attributes;
@@ -33,6 +34,9 @@ namespace WpfConfiguratorTester
 
         [ConfigProperty("Last Name", Description = "Your last name")]
         public string LastName { get; set; }
+
+        [ConfigProperty("Password", Description = "A big secret", DefaultValue = default(SecureString))]
+        public SecureString Password { get; set; }
 
         [ConfigProperty("Account active", Description = "If the account is currently active or not")]
         public bool IsAccountActive { get; set; }

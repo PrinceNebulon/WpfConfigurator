@@ -1,0 +1,13 @@
+﻿<Window x:Class="WpfConfiguratorLib.view.DefaultConfiguratorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:view="clr-namespace:WpfConfiguratorLib.view"
+        Title="DefaultConfiguratorWindow" Height="300" Width="300">
+    <Grid>
+        <view:WpfConfigurator x:Name="WpfConfigurator" 
+                              SaveRequested="WpfConfigurator_OnSaveRequested" 
+                              CancelRequested="WpfConfigurator_OnCancelRequested"
+                              LabelWidthPercentage="30" 
+                              ContentMinWidth="200"/>
+    </Grid>
+</Window>

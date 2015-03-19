@@ -34,6 +34,9 @@
                 <DataTemplate x:Key="BooleanEditor">
                     <editors:BooleanEditor LabelWidthPercentage="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, Path=LabelWidthPercentage}" />
                 </DataTemplate>
+                <DataTemplate x:Key="PasswordEditor">
+                    <editors:PasswordEditor LabelWidthPercentage="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, Path=LabelWidthPercentage}" />
+                </DataTemplate>
                 <DataTemplate x:Key="ComboboxEditor">
                     <editors:ComboboxEditor LabelWidthPercentage="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, Path=LabelWidthPercentage}" />
                 </DataTemplate>

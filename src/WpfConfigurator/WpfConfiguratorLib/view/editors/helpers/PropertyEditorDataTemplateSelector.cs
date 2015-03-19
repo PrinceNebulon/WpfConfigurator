@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Security;
 using System.Windows;
 using System.Windows.Controls;
 using WpfConfiguratorLib.attributes;
@@ -37,6 +38,8 @@ namespace WpfConfiguratorLib.view.editors.helpers
                     return elem.FindResource("StringEditor") as DataTemplate;
                 if (data.Type == typeof(bool))
                     return elem.FindResource("BooleanEditor") as DataTemplate;
+                if (data.Type == typeof(SecureString))
+                    return elem.FindResource("PasswordEditor") as DataTemplate;
                 if (data.Type.IsEnum)
                     return elem.FindResource("ComboboxEditor") as DataTemplate;
                 if (IsNumericType(data.Type))
