@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WpfConfiguratorLib.entities;
+using WpfConfiguratorLib.view.editors.helpers;
 
 namespace WpfConfiguratorLib.view
 {
@@ -20,6 +21,8 @@ namespace WpfConfiguratorLib.view
     /// </summary>
     public partial class DefaultConfiguratorWindow : Window
     {
+        public ConfiguratorWindowResult Result = ConfiguratorWindowResult.None;
+
         public DefaultConfiguratorWindow(string displayName, Type targetType)
         {
             InitializeComponent();
@@ -40,7 +43,7 @@ namespace WpfConfiguratorLib.view
         {
             try
             {
-                DialogResult = true;
+                Result = ConfiguratorWindowResult.Save;
                 ConfigManager.Save(configGroup);
                 Close();
             }
@@ -54,7 +57,7 @@ namespace WpfConfiguratorLib.view
         {
             try
             {
-                DialogResult = false;
+                Result = ConfiguratorWindowResult.Cancel;
                 Close();
             }
             catch (Exception ex)
@@ -81,10 +84,11 @@ namespace WpfConfiguratorLib.view
             }
         }
 
-        public static bool? OpenConfigWindowDialog(string displayName, Type targetType)
+        public static ConfiguratorWindowResult OpenConfigWindowDialog(string displayName, Type targetType)
         {
             try
             {
+                // Create window
                 var configWindow = new DefaultConfiguratorWindow(displayName, targetType)
                 {
                     WindowStartupLocation = WindowStartupLocation.CenterScreen,
@@ -92,12 +96,16 @@ namespace WpfConfiguratorLib.view
                     Height = 600
                 };
                 
-                return configWindow.ShowDialog();
+                // Show window
+                configWindow.ShowDialog();
+
+                // Return result
+                return configWindow.Result;
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                return false;
+                return ConfiguratorWindowResult.None;
             }
         }
     }

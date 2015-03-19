@@ -131,6 +131,7 @@
     <Compile Include="view\editors\ComboboxEditor.xaml.cs">
       <DependentUpon>ComboboxEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="view\editors\helpers\ConfiguratorWindowResult.cs" />
     <Compile Include="view\editors\helpers\GridLengthPercentageConverter.cs" />
     <Compile Include="view\editors\helpers\GridLengthPercentageInverseConverter.cs" />
     <Compile Include="view\editors\helpers\ListMultiValueConverter.cs" />
