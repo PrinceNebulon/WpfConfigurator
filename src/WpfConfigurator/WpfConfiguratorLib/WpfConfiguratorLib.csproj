@@ -112,6 +112,7 @@
     <Compile Include="attributes\DisplayPreference.cs" />
     <Compile Include="ConfigManager.cs" />
     <Compile Include="entities\Observable.cs" />
+    <Compile Include="SecureStringSerializer.cs" />
     <Compile Include="view\ConfigList.xaml.cs">
       <DependentUpon>ConfigList.xaml</DependentUpon>
     </Compile>
